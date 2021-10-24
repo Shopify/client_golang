@@ -72,15 +72,6 @@ type CollectSession struct {
 	currentByName  map[string]*dto.MetricFamily
 }
 
-func (s *CollectSession) Commit() {
-	// TODO(bwplotka): Sort metrics within family.
-	s.c.metricFamilyByName = s.currentByName
-	s.c.metrics = s.currentMetrics
-
-	s.closed = true
-	s.c.pendingSession = false
-}
-
 func (s *CollectSession) MustAddMetric(fqName, help string, labelNames, labelValues []string, valueType ValueType, value float64, ts *time.Time) {
 	if err := s.AddMetric(fqName, help, labelNames, labelValues, valueType, value, ts); err != nil {
 		panic(err)
@@ -95,7 +86,7 @@ func (s *CollectSession) AddMetric(fqName, help string, labelNames, labelValues 
 	}
 
 	// Label names can be unsorted, will be sorting them later. The only implication is cachability if
-	// consumer provide non-deterministic order of those (unlikely since label values has to be matched.
+	// consumer provide non-deterministic order of those (unlikely since label values has to be matched).
 
 	if len(labelNames) != len(labelValues) {
 		return errors.New("new metric: label name has different len than values")
@@ -125,7 +116,7 @@ func (s *CollectSession) AddMetric(fqName, help string, labelNames, labelValues 
 	h := xxhash.New()
 	h.WriteString(fqName)
 	h.Write(separatorByteSlice)
-	for i := range labelNames {
+	for i := range labelNames { // Ofc not in the same order...
 		h.WriteString(labelNames[i])
 		h.Write(separatorByteSlice)
 		h.WriteString(labelValues[i])
@@ -149,7 +140,6 @@ func (s *CollectSession) AddMetric(fqName, help string, labelNames, labelValues 
 		}
 		sort.Sort(labelPairSorter(m.Label))
 	}
-	s.currentMetrics[hSum] = m
 	switch valueType {
 	case CounterValue:
 		v := m.Counter
@@ -186,10 +176,20 @@ func (s *CollectSession) AddMetric(fqName, help string, labelNames, labelValues 
 	if ts != nil {
 		m.TimestampMs = proto.Int64(ts.Unix()*1000 + int64(ts.Nanosecond()/1000000))
 	}
+	s.currentMetrics[hSum] = m
 
 	// Will be sorted later.
 	d.Metric = append(d.Metric, m)
 	return nil
+}
+
+func (s *CollectSession) Commit() {
+	// TODO(bwplotka): Sort metrics within family.
+	s.c.metricFamilyByName = s.currentByName
+	s.c.metrics = s.currentMetrics
+
+	s.closed = true
+	s.c.pendingSession = false
 }
 
 type BlockingRegistry struct {
