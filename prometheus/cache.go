@@ -1,4 +1,4 @@
-// Copyright 2021 The Prometheus Authors
+// Copyright 2022 The Prometheus Authors
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -21,6 +21,8 @@ import (
 	"time"
 
 	"github.com/cespare/xxhash/v2"
+
+	//nolint:staticcheck // Ignore SA1019. Need to keep deprecated package for compatibility.
 	"github.com/golang/protobuf/proto"
 	"github.com/prometheus/client_golang/prometheus/internal"
 	dto "github.com/prometheus/client_model/go"
@@ -36,6 +38,7 @@ var _ TransactionalGatherer = &CachedTGatherer{}
 //
 // Use CachedTGatherer with classic Registry using NewMultiTRegistry and ToTransactionalGatherer helpers.
 // TODO(bwplotka): Add non-session update API if useful for watcher-like mechanic.
+// NOTE(bwplotka): Experimental, API and behaviour can change.
 type CachedTGatherer struct {
 	metrics            map[uint64]*dto.Metric
 	metricFamilyByName map[string]*dto.MetricFamily
