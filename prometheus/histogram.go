@@ -636,6 +636,7 @@ func NewConstHistogram(
 	count uint64,
 	sum float64,
 	buckets map[float64]uint64,
+	exemplars []*dto.Exemplar,
 	labelValues ...string,
 
 ) (Metric, error) {
@@ -650,6 +651,7 @@ func NewConstHistogram(
 		count:      count,
 		sum:        sum,
 		buckets:    buckets,
+		exemplars:  exemplars,
 		labelPairs: MakeLabelPairs(desc, labelValues),
 	}, nil
 }
@@ -661,9 +663,10 @@ func MustNewConstHistogram(
 	count uint64,
 	sum float64,
 	buckets map[float64]uint64,
+	exemplars []*dto.Exemplar,
 	labelValues ...string,
 ) Metric {
-	m, err := NewConstHistogram(desc, count, sum, buckets, labelValues...)
+	m, err := NewConstHistogram(desc, count, sum, buckets, exemplars, labelValues...)
 	if err != nil {
 		panic(err)
 	}
