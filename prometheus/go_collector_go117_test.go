@@ -25,7 +25,7 @@ import (
 	"testing"
 
 	"github.com/Shopify/client_golang/prometheus/internal"
-	dto "github.com/Shopify/client_model/go"
+	dto "github.com/prometheus/client_model/go"
 )
 
 func TestGoCollectorRuntimeMetrics(t *testing.T) {
