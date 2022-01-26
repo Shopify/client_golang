@@ -22,9 +22,9 @@ import (
 	"runtime/metrics"
 	"sync"
 
+	"github.com/Shopify/client_golang/prometheus/internal"
 	//nolint:staticcheck // Ignore SA1019. Need to keep deprecated package for compatibility.
 	"github.com/golang/protobuf/proto"
-	"github.com/prometheus/client_golang/prometheus/internal"
 	dto "github.com/prometheus/client_model/go"
 )
 

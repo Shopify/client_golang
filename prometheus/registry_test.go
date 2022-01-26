@@ -37,8 +37,8 @@ import (
 	"github.com/golang/protobuf/proto"
 	"github.com/prometheus/common/expfmt"
 
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/Shopify/client_golang/prometheus"
+	"github.com/Shopify/client_golang/prometheus/promhttp"
 )
 
 // uncheckedCollector wraps a Collector but its Describe method yields no Desc.

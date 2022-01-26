@@ -17,8 +17,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/push"
+	"github.com/Shopify/client_golang/prometheus"
+	"github.com/Shopify/client_golang/prometheus/push"
 )
 
 var (

@@ -19,7 +19,7 @@ package collectors
 import (
 	"database/sql"
 
-	"github.com/prometheus/client_golang/prometheus"
+	"github.com/Shopify/client_golang/prometheus"
 )
 
 func (c *dbStatsCollector) describeNewInGo115(ch chan<- *prometheus.Desc) {

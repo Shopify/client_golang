@@ -22,7 +22,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/prometheus/client_golang/prometheus"
+	"github.com/Shopify/client_golang/prometheus"
 )
 
 func makeInstrumentedClient() (*http.Client, *prometheus.Registry) {

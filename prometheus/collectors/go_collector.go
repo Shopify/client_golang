@@ -13,7 +13,7 @@
 
 package collectors
 
-import "github.com/prometheus/client_golang/prometheus"
+import "github.com/Shopify/client_golang/prometheus"
 
 // NewGoCollector returns a collector that exports metrics about the current Go
 // process. This includes memory stats. To collect those, runtime.ReadMemStats

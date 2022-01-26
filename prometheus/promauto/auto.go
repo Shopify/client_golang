@@ -159,7 +159,7 @@
 // Enjoy promauto responsibly!
 package promauto
 
-import "github.com/prometheus/client_golang/prometheus"
+import "github.com/Shopify/client_golang/prometheus"
 
 // NewCounter works like the function of the same name in the prometheus package
 // but it automatically registers the Counter with the
