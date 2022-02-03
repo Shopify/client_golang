@@ -16,8 +16,8 @@ package push_test
 import (
 	"fmt"
 
-	"github.com/Shopify/client_golang/prometheus"
-	"github.com/Shopify/client_golang/prometheus/push"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/push"
 )
 
 func ExamplePusher_Push() {

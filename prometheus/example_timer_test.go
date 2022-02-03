@@ -17,7 +17,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/Shopify/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus"
 )
 
 var (

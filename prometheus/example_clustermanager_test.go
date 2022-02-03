@@ -17,8 +17,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/Shopify/client_golang/prometheus"
-	"github.com/Shopify/client_golang/prometheus/promhttp"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 // ClusterManager is an example for a system that might have been built without

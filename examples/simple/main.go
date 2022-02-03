@@ -19,7 +19,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/Shopify/client_golang/prometheus/promhttp"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 var addr = flag.String("listen-address", ":8080", "The address to listen on for HTTP requests.")

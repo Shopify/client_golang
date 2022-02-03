@@ -24,7 +24,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/Shopify/client_golang/prometheus/internal"
+	"github.com/prometheus/client_golang/prometheus/internal"
 	dto "github.com/prometheus/client_model/go"
 )
 
