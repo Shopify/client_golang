@@ -566,7 +566,7 @@ func ExampleNewConstHistogram() {
 	}
 
 	// Create a constant histogram from values we got from a 3rd party telemetry system.
-	h := prometheus.MustNewConstHistogram(
+	h := prometheus.MustNewConstHistogramWithExemplar(
 		desc,
 		4711, 403.34,
 		map[float64]uint64{25: 121, 50: 2403, 100: 3221, 200: 4233},

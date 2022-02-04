@@ -631,7 +631,46 @@ func (h *constHistogram) GetExemplars() []*dto.Exemplar {
 //
 // NewConstHistogram returns an error if the length of labelValues is not
 // consistent with the variable labels in Desc or if Desc is invalid.
+
 func NewConstHistogram(
+	desc *Desc,
+	count uint64,
+	sum float64,
+	buckets map[float64]uint64,
+	labelValues ...string,
+) (Metric, error) {
+	if desc.err != nil {
+		return nil, desc.err
+	}
+	if err := validateLabelValues(labelValues, len(desc.variableLabels)); err != nil {
+		return nil, err
+	}
+	return &constHistogram{
+		desc:       desc,
+		count:      count,
+		sum:        sum,
+		buckets:    buckets,
+		labelPairs: MakeLabelPairs(desc, labelValues),
+	}, nil
+}
+
+// MustNewConstHistogram is a version of NewConstHistogram that panics where
+// NewConstHistogram would have returned an error.
+func MustNewConstHistogram(
+	desc *Desc,
+	count uint64,
+	sum float64,
+	buckets map[float64]uint64,
+	labelValues ...string,
+) Metric {
+	m, err := NewConstHistogram(desc, count, sum, buckets, labelValues...)
+	if err != nil {
+		panic(err)
+	}
+	return m
+}
+
+func NewConstHistogramWithExemplar(
 	desc *Desc,
 	count uint64,
 	sum float64,
@@ -658,7 +697,7 @@ func NewConstHistogram(
 
 // MustNewConstHistogram is a version of NewConstHistogram that panics where
 // NewConstHistogram would have returned an error.
-func MustNewConstHistogram(
+func MustNewConstHistogramWithExemplar(
 	desc *Desc,
 	count uint64,
 	sum float64,
@@ -666,7 +705,7 @@ func MustNewConstHistogram(
 	exemplars []*dto.Exemplar,
 	labelValues ...string,
 ) Metric {
-	m, err := NewConstHistogram(desc, count, sum, buckets, exemplars, labelValues...)
+	m, err := NewConstHistogramWithExemplar(desc, count, sum, buckets, exemplars, labelValues...)
 	if err != nil {
 		panic(err)
 	}
