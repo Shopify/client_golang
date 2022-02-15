@@ -624,7 +624,6 @@ func (h *constHistogram) Write(out *dto.Metric) error {
 //
 // NewConstHistogram returns an error if the length of labelValues is not
 // consistent with the variable labels in Desc or if Desc is invalid.
-
 func NewConstHistogram(
 	desc *Desc,
 	count uint64,
