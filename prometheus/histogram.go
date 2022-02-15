@@ -598,6 +598,7 @@ func (h *constHistogram) Write(out *dto.Metric) error {
 	}
 
 	if len(h.exemplars) >= len(buckets) {
+		fmt.Println("exemplars: ", len(h.exemplars), " buckets: ", len(buckets))
 		for i := 0; i < len(buckets); i++ {
 			buckets[i].Exemplar = h.exemplars[i]
 		}
