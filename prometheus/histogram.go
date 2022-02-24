@@ -597,8 +597,6 @@ func (h *constHistogram) Write(out *dto.Metric) error {
 		sort.Sort(buckSort(buckets))
 	}
 
-	//fmt.Println("exemplars: ", len(h.exemplars), " buckets: ", len(buckets))
-	//fmt.Println("bucket 0 exemplar: ", buckets[0].Exemplar.GetValue())
 	if len(h.exemplars) > 0 {
 		r := len(buckets)
 		if len(h.exemplars) < r {
