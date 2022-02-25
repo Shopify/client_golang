@@ -601,6 +601,11 @@ func (h *constHistogram) Write(out *dto.Metric) error {
 		r := len(buckets)
 		if len(h.exemplars) < r {
 			r = len(h.exemplars)
+		} else {
+			//check if there is an exemplar for upperbound bucket
+			if e := h.exemplars[r-1]; e != nil {
+				buckets[r-1].Exemplar = h.exemplars[r-1]
+			}
 		}
 		for i := 0; i < r; i++ {
 			buckets[i].Exemplar = h.exemplars[i]
