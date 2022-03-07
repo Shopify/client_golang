@@ -582,7 +582,9 @@ func (h *constHistogram) Desc() *Desc {
 
 func (h *constHistogram) Write(out *dto.Metric) error {
 	his := &dto.Histogram{}
+	// h.buckets, buckets and bounds are all the same length
 	buckets := make([]*dto.Bucket, 0, len(h.buckets))
+	bounds := make([]float64, 0)
 
 	his.SampleCount = proto.Uint64(h.count)
 	his.SampleSum = proto.Float64(h.sum)
@@ -591,24 +593,24 @@ func (h *constHistogram) Write(out *dto.Metric) error {
 			CumulativeCount: proto.Uint64(count),
 			UpperBound:      proto.Float64(upperBound),
 		})
+		bounds = append(bounds, upperBound)
 	}
 
+	// make sure that both bounds and buckets have the same ordering
 	if len(buckets) > 0 {
 		sort.Sort(buckSort(buckets))
 	}
+	sort.Float64s(bounds)
 
 	if len(h.exemplars) > 0 {
 		r := len(buckets)
-		if len(h.exemplars) < r {
-			r = len(h.exemplars)
-		} else {
-			//check if there is an exemplar for upperbound bucket
-			if e := h.exemplars[r-1]; e != nil {
-				buckets[r-1].Exemplar = h.exemplars[r-1]
-			}
-		}
 		for i := 0; i < r; i++ {
-			buckets[i].Exemplar = h.exemplars[i]
+			bound := sort.SearchFloat64s(bounds, *h.exemplars[i].Value)
+			// Only append the exemplar if it's within the bounds defined in the
+			// buckets.
+			if bound < r {
+				buckets[bound].Exemplar = h.exemplars[i]
+			}
 		}
 	}
 
