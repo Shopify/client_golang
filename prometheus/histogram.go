@@ -599,8 +599,8 @@ func (h *constHistogram) Write(out *dto.Metric) error {
 	// make sure that both bounds and buckets have the same ordering
 	if len(buckets) > 0 {
 		sort.Sort(buckSort(buckets))
+		sort.Float64s(bounds)
 	}
-	sort.Float64s(bounds)
 
 	if len(h.exemplars) > 0 {
 		r := len(buckets)
