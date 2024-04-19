@@ -11,7 +11,7 @@ require (
 	github.com/prometheus/client_model v0.2.0
 	github.com/prometheus/common v0.35.0
 	github.com/prometheus/procfs v0.7.3
-	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a
+	golang.org/x/sys v0.18.0
 	google.golang.org/protobuf v1.28.0
 )
 
@@ -21,9 +21,9 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180228061459-e0a39a4cb421 // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/mwitkow/go-conntrack v0.0.0-20190716064945-2f068394615f // indirect
-	golang.org/x/net v0.0.0-20220225172249-27dd8689420f // indirect
+	golang.org/x/net v0.23.0 // indirect
 	golang.org/x/oauth2 v0.0.0-20220223155221-ee480838109b // indirect
-	golang.org/x/text v0.3.7 // indirect
+	golang.org/x/text v0.14.0 // indirect
 	google.golang.org/appengine v1.6.6 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
